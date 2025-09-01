@@ -4,7 +4,7 @@
 {% block title_layout %}
     
     {% block title %}
-        IA
+        Página
     {% endblock title %}
         | MobiPart
 {% endblock title_layout %}
@@ -14,6 +14,8 @@
 {% endblock extra_head_layout %}
 
 {% block content_layout %}
+    {% include 'components/commons/header.html' %}
     {% block content %} {% endblock content %}
+    {% include 'components/commons/footer.html' %}
 {% endblock content_layout %}
     
