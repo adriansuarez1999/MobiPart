@@ -12,10 +12,25 @@ def get_avatar_filename(instance, filename):
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    usuario = models.CharField(max_length=50, blank=True)
+    alias = models.CharField(max_length=50, blank=True)
     avatar = models.ImageField(
         upload_to=get_avatar_filename, default="user/default/default.jpg"
     )
 
     def __str__(self):
         return self.username
+
+    @property
+    def is_registered(self):
+        return self.groups.filter(name="registered").exists()
+
+    @property
+    def is_collaborator(self):
+        return self.groups.filter(name="collaborators").exists()
+
+    @property
+    def is_admin(self):
+        return self.groups.filter(name="admin").exists()
+
+    # def is_collaborator(self):
+    #     return self.groups.filter(name="Colaborators").exists()
