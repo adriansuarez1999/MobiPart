@@ -32,5 +32,3 @@ class User(AbstractUser):
     # def is_collaborator(self):
     #     return self.groups.filter(name="Colaborators").exists()
     
-
-    
