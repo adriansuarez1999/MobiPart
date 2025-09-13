@@ -47,7 +47,11 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = self.generate_unique_slug()
+
         super().save(*args, **kwargs)
+
+        if not self.images.exists():
+            PostImage.objects.created(post=self, image="post/default/post_default.png")
 
 
 class Comment(models.Model):
@@ -75,6 +79,7 @@ class PostImage(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to=get_image_path)
     active = models.BooleanField(default=True)
+    creted_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"PostImage {self.id}"
