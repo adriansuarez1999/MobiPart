@@ -51,7 +51,7 @@ class Post(models.Model):
         super().save(*args, **kwargs)
 
         if not self.images.exists():
-            PostImage.objects.created(post=self, image="post/default/post_default.png")
+            PostImage.objects.create(post=self, image="post/default/post_default.png")
 
 
 class Comment(models.Model):
@@ -63,7 +63,7 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.id
+        return self.content
 
 
 def get_image_path(instance, filename):
