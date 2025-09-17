@@ -29,6 +29,7 @@ class CustomUserAdmin(UserAdmin):
     is_admin.short_description = "Es usuario administrador"
     is_admin.boolean = True
 
+
     def add_to_registered(self, request, queryset):
         registered_group = Group.objects.get(name="Registered")
         for user in queryset:
