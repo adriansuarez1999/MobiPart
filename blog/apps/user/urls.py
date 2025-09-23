@@ -1,8 +1,10 @@
-from django.urls import path  
-from apps.user import views as views 
+from django.urls import path
+from apps.user import views as views
 
-app_name = 'user'
+app_name = "user"
 
 urlpatterns = [
-    path('user/profile', views.UserProfileView.as_view(), name='user_profile'),
+    path("user/profile", views.UserProfileView.as_view(), name="user_profile"),
+    path("auth/register", views.RegisterView.as_view(), name="auth_register"),
+    # path('auth/login', views.LoginView.as_view(), name='auth_login'),
 ]
