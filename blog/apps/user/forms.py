@@ -22,3 +22,4 @@ class LoginForm(AuthenticationForm):
             attrs={"class": "form-control", "paceholder": "Contraseña"}
         ),
     )
+
