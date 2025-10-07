@@ -1,6 +1,26 @@
 <nav>
-    <ul class="flex gap-4">
-        <li><a href="{% url  'home' %}">Inicio</a></li>
-        <li><a href="{% url 'user:user_profile'  %}">Perfil</a></li>
-    </ul>
+    <div class="nav-actions">
+        <div class="user-menu">
+            <button class="login-btn">
+                <i class="fas fa-user"></i>
+                <span>Iniciar Sesión</span>
+            </button>
+            <div class="dropdown-menu">
+                <div class="dropdown-divider"></div>
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'user:user_profile' %}" class="dropdown-item">Mi Perfil</a>
+                    <a href="{% url 'user:auth_logout' %}" class="dropdown-item">Cerrar Sesión</a>
+                    <a href="#" class="dropdown-item">Mis Favoritos</a>
+                    <a href="#" class="dropdown-item">Mis Publicaciones</a>
+
+                {% else %}
+                    <a href="{% url 'user:auth_register' %}" class="dropdown-item">Registrarse</a>
+                    <a href="{% url 'user:auth_login' %}" class="dropdown-item">Iniciar sesión</a>
+                    
+                {% endif %}
+                    
+            </div>
+        </div>
+    </div>
 </nav>

@@ -14,8 +14,11 @@
 {% endblock extra_head_layout %}
 
 {% block content_layout %}
-    <main class="">
-        {% block content %} {% endblock content %}
+    {% include 'components/commons/header.html' %}
+    <main>
+        <div>
+            {% block content %} Manejar contenido del post {% endblock content %}
+        </div>
     </main>
+    {% include 'components/commons/footer.html' %}
 {% endblock content_layout %}
-    

@@ -1,5 +1,22 @@
-<header class="h-14 flex justify-center items-center text-white bg-[var(--color-primary)] gap-4">
-    <div class="container flex justify-between mx-4 md:mx-8 lg:mx-40">
-        MobiPart {% include 'components/ui/navbar.html' %}
-    </div>
-</header>
+<header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="{% url 'home' %}" class="nav-logo-link">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>MobiPart</span>
+                    </a>
+                </div>
+                
+                <div class="nav-search">
+                    <input type="text" placeholder="Buscar celulares, repuestos..." class="search-input">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>              
+                {% include 'components/ui/navbar.html' %}
+            </div>
+        </nav>
+        
+        {% include 'components/filters/category_filters.html' %}
+    </header>
