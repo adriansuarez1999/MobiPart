@@ -1,0 +1,24 @@
+{% extends 'layouts/base_layout.html' %}
+
+
+{% block title_layout %}
+    
+    {% block title %}
+        Página
+    {% endblock title %}
+        | MobiPart
+{% endblock title_layout %}
+
+{% block extra_head_layout %}
+    {% block extra_head %} {% endblock extra_head %}
+{% endblock extra_head_layout %}
+
+{% block content_layout %}
+    {% include 'components/commons/header.html' %}
+    <main>
+        <div>
+            {% block content %} Manejar contenido del post {% endblock content %}
+        </div>
+    </main>
+    {% include 'components/commons/footer.html' %}
+{% endblock content_layout %}
