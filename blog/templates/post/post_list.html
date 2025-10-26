@@ -5,9 +5,11 @@
 
 {% block content %}
     {% for post in posts %}
-        <p>{{ post.title }}</p>
-        <p>{{ post.category }}</p>
-        <p>{{ post.author }}</p> 
-        <p>{{ post.content }}</p> 
+        <section class="">
+            <p>{{ post.title }}</p>
+            <p>{{ post.category }}</p>
+            <p>{{ post.author }}</p> 
+            <p>{{ post.content }}</p>
+        </section>
     {% endfor %}
 {% endblock content %}

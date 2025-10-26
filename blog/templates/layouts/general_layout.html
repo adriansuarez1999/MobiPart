@@ -15,8 +15,15 @@
 
 {% block content_layout %}
     {% include 'components/commons/header.html' %}
+<<<<<<< Updated upstream
     <main>
         {% block content %} {% endblock content %}
+=======
+    {% include 'components/main_text/body.html' %}
+    <main>
+        {% block content %} 
+        {% endblock content %}
+>>>>>>> Stashed changes
     </main>
     {% include 'components/commons/footer.html' %}
 {% endblock content_layout %}

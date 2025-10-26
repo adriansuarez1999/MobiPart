@@ -1,18 +1,30 @@
 {% extends 'layouts/auth_layout.html' %}
-
+{% load static %}
 
 {% block title %} Iniciar sesión {% endblock title %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock extra_head %}
 
 {% block content %}
-<section class="">
-    <h1 class="">Iniciar sesión</h1>
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<section class="login-page">
+    <div class="login-container">
+        <div class="div-logo">
+            <i class="fas fa-mobile-alt"></i>
+            <p>MobiPart</p>
+        </div>
+        <div class="login-card">
+            <h1 class="login-title">Iniciar sesión</h1>
 
-    <form method="POST" class="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="">Iniciar sesión</button>
-    </form>
+            <form method="POST" class="login-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="login-btn">Ingresar</button>
+            </form>
+        </div>
+    </div>
 </section>
-    
 {% endblock content %}
+
