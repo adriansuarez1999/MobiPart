@@ -9,12 +9,14 @@
                 </div>
                 
                 <div class="nav-search">
+
                     <form method="GET" action="{% url 'post:post_list' %}">
                         <input type="text" name="search_query" placeholder="Buscar celulares, repuestos..." class="search-input">
                         <button class="search-btn">
                             <i class="fas fa-search"></i>
                         </button>
                     </form>
+
                 </div>              
                 {% include 'components/ui/navbar.html' %}
             </div>

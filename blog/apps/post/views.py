@@ -27,6 +27,7 @@ class PostListView(ListView):
             )
         return queryset.order_by(order_by)
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["filter_form"] = PostFilterForm(self.request.GET)
@@ -88,3 +89,4 @@ class PostFilterView(FilterView):
     model = Post
     filterset_class = PostFilter
     template_name = "post/post_list.html"
+
