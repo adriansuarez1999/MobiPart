@@ -7,7 +7,6 @@
 {% block content %}
 <section class="">
     <h1 class="">Registrarse</h1>
-
     <form method="POST" enctype="multipart/form-data" class="">
         {% csrf_token %}
         {{ form.as_p }}
