@@ -4,6 +4,9 @@
 
 
 {% block content %}
+
+    <h2>Resultado de la busqueda</h2>
+    
     {% for post in posts %}
         <p>{{ post.title }}</p>
         <p>{{ post.category }}</p>
@@ -11,3 +14,4 @@
         <p>{{ post.content }}</p> 
     {% endfor %}
 {% endblock content %}
+
