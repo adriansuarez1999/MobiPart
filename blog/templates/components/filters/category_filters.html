@@ -1,10 +1,10 @@
 <div class="categories-bar">
             <div class="container">
                 <div class="categories">
-                    <button class="category-btn active" data-category="all">
-                        <i class="fas fa-th"></i>
-                        Todos
-                    </button>
+                        <button class="category-btn active" data-category="all">
+                            <i class="fas fa-th"></i>
+                            Todos
+                        </button>
                     <button class="category-btn" data-category="nuevos">
                         <i class="fas fa-mobile-alt"></i>
                         Celulares Nuevos
@@ -24,3 +24,60 @@
                 </div>
             </div>
         </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const baseUrl = "{% url 'post:post_list' %}";
+
+    // mapeo data-category -> nombre tal como está en la BD
+    const categoryMap = {
+        'all': '',               // "Todos" -> borra search_query
+        'nuevos': 'Nuevo',
+        'usados': 'Usado',
+        'repuestos': 'Repuesto',
+        'reparacion': 'Reparacion'
+    };
+
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const key = this.dataset.category;
+        const targetName = categoryMap[key] ?? key;
+
+        // construir nuevos params manteniendo otros (p. ej. order_by)
+        const params = new URLSearchParams(window.location.search);
+
+        if (targetName) {
+            params.set('search_query', targetName);
+        } else {
+            params.delete('search_query'); // "Todos"
+        }
+
+        // resetear paginación al cambiar filtro
+        params.delete('page');
+
+        window.location.href = baseUrl + "?" + params.toString();
+
+        });
+    });
+
+    // marcar active según el search_query actual (para que el botón se vea activo)
+    (function markActive() {
+        const current = new URLSearchParams(window.location.search).get('search_query') || '';
+        document.querySelectorAll('.category-btn').forEach(btn => {
+        const key = btn.dataset.category;
+        const name = categoryMap[key] ?? key;
+        if (!name && !current) {
+            btn.classList.add('active');
+        } else if (name && current.toLowerCase() === name.toLowerCase()) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+        });
+    })();
+
+    });
+</script>
