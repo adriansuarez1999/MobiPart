@@ -1,8 +1,112 @@
 {% extends 'layouts/general_layout.html' %}
+{% load static %}
 
 {% block title %} Perfil {% endblock title %}
 
-
 {% block content %}
-    Colocar contenido del perfil
+    <link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!--https://fontawesome.com/search?q=postt&f=classic&s=solid&o=r-->
+    <div class="contenedor-padre">
+        <div class="nav-bar-vertical">
+            <div class="logo">
+                <i class="fas fa-mobile-alt"></i>
+                <h2>MobiPart</h2>
+            </div>
+            <ul class="nav-links">
+                <li class="items"><i class="fas fa-shop"></i><a href="#">Publicar</a></li>
+                <li class="items"><i class="fas fa-shopping-cart"></i><a href="#">Mis publicaciones</a></li>
+                <li class="items"><i class="fas fa-envelope-open"></i><a href="#">Mensajes</a></li>
+                <li class="items"><i class="fas fa-circle-user"></i><a href="#">Mi Cuenta</a></li>
+            </ul>
+        </div>
+        <div class="cuerpo">
+            <div class="bienvenido-horizontal">
+                <div class="bienvenido">
+                    <h3>Bienvenido de nuevo, Fulano</h3>
+                    <i class="fas fa-smile"></i>
+                </div>
+                <p>Tus publicaciones, compras y mensajes en un solo lugar</p>
+            </div>
+            <div class="contenedor-panza">
+                    <div class="tarjeta-1">
+                        <div class="descripcion">
+                            <h3>Perfil</h3>
+                            <p>Cambia tu foto de perfil y edita tu información personal.</p>
+                        </div>
+                        <div class="cont-perfil">
+                            <img class= "img-perfil" src="blog/static/post_images/pinguino2.jpg" alt="">
+                            <div>
+                                <button>Cambiar foto</button>
+                                <p>JPG o PNG</p>
+                                <p>Tu foto se recortará automaticamente</p>
+                            </div>
+                        </div>
+                        <div class="cont-form">
+                            <form action="">
+                                <h5>nombre</h5>
+                                <input type="text" placeholder="Rambo777">
+                                <h5>e-mail</h5>
+                                <input type="text" placeholder="Rambo323@gmail.com">
+                                <h5>contraseña</h5>
+                                <input type="number"> <button>editar contraseña</button>
+                                <h5>localidad</h5>
+                                <input type="text" placeholder="Charata">
+                            </form>
+                            <button>Actualizar perfil</button>
+                        </div>
+                    </div>
+                <div class="contenedor-derecho">
+                    <div class="actividad-reciente">
+                        <h5>Mis Favoritos</h5>
+                    </div>
+                    <div class="tarjeta-3">
+                        <h5>Publicaciones cercanas sugueridas</h5>
+                        <div class="div-publicaciones">
+                            <div class="publicacion">
+                                <img src="blog/static/post_images/screen1.jpg" alt="">
+                                <div class="detalles-publicacion">
+                                    <h6>Samsung Galaxy S24 Ultra</h6>
+                                    <button>Ver publicación</button>
+                                    <div class="burbujas-usuario">
+                                        <img src="" alt="">
+                                        <img src="" alt="">
+                                        <img src="" alt="">
+                                        <p>...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="publicacion">
+                                <img src="blog/static/post_images/screen2.jpg" alt="">
+                                <div class="detalles-publicacion">
+                                    <h6>Samsung Galaxy S24 Ultra</h6>
+                                    <button>Ver publicación</button>
+                                    <div class="burbujas-usuario">
+                                        <img src="" alt="">
+                                        <img src="" alt="">
+                                        <img src="" alt="">
+                                        <p>...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="publicacion">
+                                <img src="blog/static/post_images/screen3.jpg" alt="">
+                                <div class="detalles-publicacion">
+                                    <h6>Samsung Galaxy S24 Ultra</h6>
+                                    <button>Ver publicación</button>
+                                    <div class="burbujas-usuario">
+                                        <img src="" alt="">
+                                        <img src="" alt="">
+                                        <img src="" alt="">
+                                        <p>...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button>Editar publicacion</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
