@@ -14,8 +14,8 @@
                 <h2>MobiPart</h2>
             </div>
             <ul class="nav-links">
-                <li class="items"><i class="fas fa-shop"></i><a href="#">Publicar</a></li>
-                <li class="items"><i class="fas fa-shopping-cart"></i><a href="#">Mis publicaciones</a></li>
+                <li class="items"><i class="fas fa-shop"></i><a href="post_create.html">Publicar</a></li>
+                <li class="items"><i class="fas fa-shopping-cart"></i><a href="{% url 'post:my_post' %}">Mis publicaciones</a></li>
                 <li class="items"><i class="fas fa-envelope-open"></i><a href="#">Mensajes</a></li>
                 <li class="items"><i class="fas fa-circle-user"></i><a href="#">Mi Cuenta</a></li>
             </ul>
@@ -35,7 +35,7 @@
                             <p>Cambia tu foto de perfil y edita tu información personal.</p>
                         </div>
                         <div class="cont-perfil">
-                            <img class= "img-perfil" src="blog/static/post_images/pinguino2.jpg" alt="">
+                            <img class= "img-perfil" src="{% static 'post_images/pinguino.jpg' %}" alt="">
                             <div>
                                 <button>Cambiar foto</button>
                                 <p>JPG o PNG</p>
@@ -45,64 +45,54 @@
                         <div class="cont-form">
                             <form action="">
                                 <h5>nombre</h5>
-                                <input type="text" placeholder="Rambo777">
+                                <input type="text" maxlength="50" placeholder="Rambo77">
                                 <h5>e-mail</h5>
-                                <input type="text" placeholder="Rambo323@gmail.com">
+                                <input type="text" maxlength="50" placeholder="Rambo323@gmail.com">
                                 <h5>contraseña</h5>
-                                <input type="number"> <button>editar contraseña</button>
+                                <input type="password" maxlength="25"><button>editar contraseña</button>
                                 <h5>localidad</h5>
-                                <input type="text" placeholder="Charata">
+                                <input type="text" maxlength="50" placeholder="Charata">
                             </form>
-                            <button>Actualizar perfil</button>
+                            <button class="actualizar-btn">Actualizar perfil</button>
                         </div>
                     </div>
                 <div class="contenedor-derecho">
-                    <div class="actividad-reciente">
+                    <div class="favoritos">
                         <h5>Mis Favoritos</h5>
+                        <div class="cont-favoritos">
+                            <div class="div-tarjetas">
+                                <div class="tarjetas-favoritos">
+                                    <img src="{% static 'post_images/celu1.jpeg' %}" alt="">
+                                </div>
+                                <i class="fas fa-heart"></i>
+                                <button>Quitar</button>
+                            </div>
+                            <div class="div-tarjetas">
+                                <div class="tarjetas-favoritos">
+                                    <img src="{% static 'post_images/celu2.jpeg' %}" alt="">
+                                </div>
+                                <i class="fas fa-heart"></i>
+                                    <button>Quitar</button>
+                            </div>
+                            <div class="div-tarjetas">
+                                <div class="tarjetas-favoritos">
+                                    <img src="{% static 'post_images/celu3.jpeg' %}" alt="">
+                                </div>
+                                <i class="fas fa-heart"></i>
+                                <button>Quitar</button>
+                            </div>
+                            <button>Ver todos</button>
+                        </div>
                     </div>
                     <div class="tarjeta-3">
-                        <h5>Publicaciones cercanas sugueridas</h5>
-                        <div class="div-publicaciones">
-                            <div class="publicacion">
-                                <img src="blog/static/post_images/screen1.jpg" alt="">
-                                <div class="detalles-publicacion">
-                                    <h6>Samsung Galaxy S24 Ultra</h6>
-                                    <button>Ver publicación</button>
-                                    <div class="burbujas-usuario">
-                                        <img src="" alt="">
-                                        <img src="" alt="">
-                                        <img src="" alt="">
-                                        <p>...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="publicacion">
-                                <img src="blog/static/post_images/screen2.jpg" alt="">
-                                <div class="detalles-publicacion">
-                                    <h6>Samsung Galaxy S24 Ultra</h6>
-                                    <button>Ver publicación</button>
-                                    <div class="burbujas-usuario">
-                                        <img src="" alt="">
-                                        <img src="" alt="">
-                                        <img src="" alt="">
-                                        <p>...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="publicacion">
-                                <img src="blog/static/post_images/screen3.jpg" alt="">
-                                <div class="detalles-publicacion">
-                                    <h6>Samsung Galaxy S24 Ultra</h6>
-                                    <button>Ver publicación</button>
-                                    <div class="burbujas-usuario">
-                                        <img src="" alt="">
-                                        <img src="" alt="">
-                                        <img src="" alt="">
-                                        <p>...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <button>Editar publicacion</button>
+                        <div class="texto-encima">
+                            <p>En MobiPart podes descubrir y vender varios dispositivos</p>
+                            <br>
+                            <p>* Celus y tablets,del mas viejo hasta el mas nuevo (incluso si no sirve)</p>
+                            <br>
+                            <p>* PC de escritorio y Notebooks</p>
+                            <br>
+                            <p>* Monitores y consolas de videojuegos</p>
                         </div>
                     </div>
                 </div>

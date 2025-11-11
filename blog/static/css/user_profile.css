@@ -17,7 +17,7 @@ body {
 
 .contenedor-padre {
   display: flex;
-  background-color: #c9e6;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   min-height: 100vh;
   font-size: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -127,63 +127,51 @@ body {
 
 .tarjeta-3 {
   width: 775px;
-  height: 526px;
+  height: 500px;
+  background-color: white;
+  border-radius: 20px;
+  background-image: url("/static/post_images/screen2.jpg");
+  background-size: cover;
+  background-position: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
-  border-radius: 20px;
-}
-.tarjeta-3 h5 {
+  overflow: hidden;
+  color: black;
+  text-align: center;
   position: relative;
-  top: -40px;
+}
+.tarjeta-3::before {
+  border-radius: 20px;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgb(0, 0,0, 0.4);
+  z-index: 1;
+}
+.texto-encima {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 28px;
+  text-align: center;
+  z-index: 1;
 }
 
-.actividad-reciente {
-  background-color: white;
-  width: 775px;
-  height: 200px;
-  border-radius: 20px;
-}
-.actividad-reciente h5 {
-  position: relative;
-  top: 15px;
-  left: 15px;
-}
-.div-publicaciones {
-  position: relative;
-  top: -20px;
-  width: 300px;
-  height: 390px;
+.favoritos {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  background-color: #ffd700;
-}
-
-.publicacion {
-  display: flex;
-  gap: 15px;
-  height: 120px;
-  background-color: aqua;
-}
-.publicacion img {
-  width: 120px;
-  height: 120px;
-}
-.burbujas-usuario {
-  position: relative;
-  top: 10px;
-  display: flex;
   align-items: center;
-  gap: 5px;
+  background-color: white;
+  width: 775px;
+  height: 226px;
+  border-radius: 20px;
 }
-
-.publicacion .detalles-publicacion img {
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
+.favoritos h5 {
+  margin: 10px 0;
 }
 
 .cuerpo p {
@@ -200,25 +188,79 @@ body {
   height: 100px;
   border-radius: 40px;
 }
-.cont-form {
-  margin-top: 50px;
-}
 
-.cont-perfil div button, .cont-form button {
-  margin: 10px 0px;
-  width: 120px;
-  height: 30px;
+.cont-perfil div button, .cont-form button, .cont-favoritos button {
+  width: 150px;
+  height: 35px;
   border-style: none;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 10px;
   color: white;
 }
-.cont-perfil div button:hover, .cont-form button:hover {
+.cont-perfil div button {
+  margin: 10px 0px;
+}
+.cont-perfil div button:hover, .cont-form button:hover, .cont-favoritos button:hover {
   cursor: pointer;
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
 }
-.cont-form button {
+.cont-form input {
+  width: 350px;
+  height: 25px;
+}
+.cont-form form button {
+  margin-left: 30px;
+}
+.cont-form h5 {
   margin-top: 30px;
+}
+.cont-form .actualizar-btn {
+  font-size: 15px;
+  margin-top: 30px;
+  width: 180px;
+  height: 40px;
+}
+
+.cont-favoritos {
+  width: 650px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  background-color: antiquewhit;
+}
+.div-tarjetas {
+  width: 160px;
+  height: 146px;
+}
+.tarjetas-favoritos {
+  width: 140px;
+  height: 100px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+}
+.tarjetas-favoritos img {
+  width: 150px;
+  height: 140px;
+}
+.div-tarjetas i {
+  margin-top: 15px;
+  margin-left: 25px;
+  color: #fd582f;
+}
+
+.div-tarjetas button {
+  width: 60px;
+  height: 30px;
+  border-style: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  color: white;
 }
 
 /* Responsive para tablets y pantallas medianas */

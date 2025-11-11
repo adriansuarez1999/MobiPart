@@ -1,9 +1,8 @@
 from django.views.generic import TemplateView, ListView
 from django.db.models import Count, Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.post.models import *
 from apps.post.forms import PostFilterForm
-from django_filters.views import FilterView
-from apps.post.filters import PostFilter
 
 
 class PostListView(ListView):
@@ -81,12 +80,10 @@ class PostDeleteView(TemplateView):
     template_name = "post/post_detail.html"
 
 
-# FILTROS
-
-
-# filtro para buscador
-class PostFilterView(FilterView):
+class MyPostView(LoginRequiredMixin, ListView):
     model = Post
-    filterset_class = PostFilter
     template_name = "post/post_list.html"
+    context_object_name = "post"
 
+    def get_queryset(self):
+        return Post.objects.filter(author=self.request.user)
