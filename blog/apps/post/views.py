@@ -11,7 +11,7 @@ class PostListView(ListView):
     template_name = "post/post_list.html"
     context_object_name = "posts"
 
-    paginate_by = 8
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -64,9 +64,6 @@ class PostListView(ListView):
         return context
 
 
-print("Este es el error: ", PostForm)
-
-
 class PostDetailView(TemplateView):
     template_name = "post/post_detail.html"
 
@@ -103,3 +100,41 @@ class MyPostView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Post.objects.filter(author=self.request.user)
+    
+    paginate_by = 3
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["filter_form"] = PostFilterForm(self.request.GET)
+        context["categories"] = Category.objects.all()
+
+        if context.get("is_paginated", False):
+            query_params = self.request.GET.copy()
+            query_params.pop("page", None)
+
+            pagination = {}
+            page_obj = context["page_obj"]
+            paginator = context["paginator"]
+
+            if page_obj.number > 1:
+                pagination["first_page"] = (
+                    f"?{query_params.urlencode()}&page={paginator.page_range[0]}"
+                )
+
+            if page_obj.has_previous():
+                pagination["previous_page"] = (
+                    f"?{query_params.urlencode()}&page={page_obj.number -1}"
+                )
+
+            if page_obj.has_next():
+                pagination["next_page"] = (
+                    f"?{query_params.urlencode()}&page={page_obj.number +1}"
+                )
+
+            if page_obj.number < paginator.num_pages:
+                pagination["last_page"] = (
+                    f"?{query_params.urlencode()}&page={paginator.num_pages}"
+                )
+            context["pagination"] = pagination
+
+        return context

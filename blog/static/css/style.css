@@ -874,3 +874,43 @@ body {
     color: #333;
 }
 
+<style>
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.pagination-list {
+  display: flex;
+  list-style: none;       /* ❗ Elimina los puntitos */
+  gap: 8px;
+  padding: 0;
+}
+
+.pagination-list li a,
+.pagination-list li span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.pagination-list li a:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.pagination-list li.active span {
+  background-color: #343a40;
+  color: #fff;
+  cursor: default;
+}
+

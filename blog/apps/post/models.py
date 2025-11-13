@@ -60,7 +60,7 @@ def get_image_path(instance, filename):
 
 
 class PostImage(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="images")
+    post = models.ForeignKey(Post, related_name="images", on_delete=models.CASCADE)
     image = models.ImageField(upload_to=get_image_path)
     active = models.BooleanField(default=True)
     creted_at = models.DateTimeField(default=timezone.now)
