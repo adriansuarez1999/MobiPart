@@ -4,16 +4,44 @@
 
 
 {% block content %}
-
-    <h2>Resultado de la busqueda</h2>
-    
-    {% for post in posts %}
-        <section class="">
-            <p>{{ post.title }}</p>
-            <p>{{ post.category }}</p>
-            <p>{{ post.author }}</p> 
-            <p>{{ post.content }}</p>
-        </section>
-    {% endfor %}
+  <h2>Publicaciones</h2>
+  <section class="featured-section">
+    <div class="container">
+      <div class="products-grid">
+        {% for posts in post %}
+        <div class="product-card">
+          <div class="product-badge new">{{ posts.category }}</div>
+          <div class="product-image">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">{{ posts.title }}</h3>
+            <p class="product-description">{{ posts.content }}</p>
+            <div class="product-rating">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <span class="rating-text">
+                <p>{{ posts.author }}</p>
+              </span>
+            </div>
+            <div class="product-price">
+              <span class="current-price">$1,299,999</span>
+            </div>
+            <button class="add-to-cart-btn">
+              <i class="fas fa-shopping-cart"></i>
+              Enviar Mensaje
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
 {% endblock content %}
+
 

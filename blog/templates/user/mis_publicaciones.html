@@ -1,0 +1,172 @@
+{% extends 'layouts/general_layout.html' %}
+{% load static %}
+
+{% block title %} Perfil {% endblock title %}
+
+{% block content %}
+  <section class="featured-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Productos Destacados</h2>
+        <a href="#" class="view-all">Ver todos <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="products-grid">
+        <!-- Product Card 1 -->
+        <div class="product-card">
+          <div class="product-badge new">Nuevo</div>
+          <div class="product-image">
+            <img src="imagenes/celu3.jpeg" alt="" class="products-img">
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Galaxy S24 Ultra</h3>
+            <p class="product-description">512 gb, 1 año de uso sin detalles!</p>
+            <div class="product-user">
+              <div class="img-user">
+                <img src="imagenes/flor.png" alt="">
+              </div>
+              <span class="rating-text">canelita_14</span>
+            </div>
+            <div class="product-price">
+              <span class="current-price">$900,000</span>
+              <span class="original-price">$1,100,000</span>
+            </div>
+            <button class="add-to-cart-btn">
+              <i class="fas fa-message"></i>
+              contactar vendedor
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Card 2 -->
+        <div class="product-card">
+          <div class="product-badge used">Usado</div>
+          <div class="product-image">
+            <img src="imagenes/celu2.jpeg" alt="" class="products-img">
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Samsung Galaxy S23</h3>
+            <p class="product-description">256GB, Excelente estado</p>
+            <div class="product-user">
+              <div class="img-user">
+                <img src="imagenes/pinguino.jpg" alt="">
+              </div>
+              <span class="rating-text">juancito_ramirez</span>
+            </div>
+            <div class="product-price">
+              <span class="current-price">$899,999</span>
+              <span class="original-price">$1,199,999</span>
+            </div>
+            <button class="add-to-cart-btn">
+              <i class="fas fa-message"></i>
+              contactar vendedor
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Card 3 -->
+        <div class="product-card">
+          <div class="product-badge parts">Repuesto</div>
+          <div class="product-image">
+            <img src="imagenes/modulo.jpg" alt="" class="products-img">
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Pantalla iPhone 12</h3>
+            <p class="product-description">Original, no permuto!</p>
+            <div class="product-user">
+              <div class="img-user">
+                <img src="imagenes/pinguino2.jpg" alt="">
+              </div>
+              <span class="rating-text">adrian_suarez</span>
+            </div>
+            <div class="product-price">
+              <span class="current-price">$200.000</span>
+              <span class="original-price">$250,000</span>
+            </div>
+            <button class="add-to-cart-btn">
+              <i class="fas fa-message"></i>
+              contactar vendedor
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Card 4 -->
+        <div class="product-card">
+          <div class="product-badge repair">Para Reparar</div>
+          <div class="product-image">
+            <img src="imagenes/iphone.jpeg" alt="" class="products-img">
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">iPhone 13 Mini</h3>
+            <p class="product-description">No anda el face-id, funciona igual, escucho ofertas</p>
+            <div class="product-user">
+              <div class="img-user">
+                <img src="imagenes/chad.jpg" alt="">
+              </div>
+              <span class="rating-text">alejandro</span>
+            </div>
+            <div class="product-price">
+              <span class="current-price">$399,999</span>
+              <span class="original-price">$799,999</span>
+            </div>
+            <button class="add-to-cart-btn">
+              <i class="fas fa-message"></i>
+              contactar vendedor
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Card 5 -->
+        <div class="product-card">
+          <div class="product-badge new">Nuevo</div>
+          <div class="product-image">
+            <img src="imagenes/notebook.jpg" alt="" class="products-img">
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Notebook Victus, 512 gb</h3>
+            <p class="product-description">Ningún detalle la vendo por desuso</p>
+            <div class="product-user">
+              <div class="img-user">
+                <img src="imagenes/user.jpg" alt="">
+              </div>
+              <span class="rating-text">luis647</span>
+            </div>
+            <div class="product-price">
+              <span class="current-price">$1,100,000</span>
+              <span class="original-price">$1,400,000</span>
+            </div>
+            <button class="add-to-cart-btn">
+              <i class="fas fa-message"></i>
+              contactar vendedor
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Card 6 -->
+        <div class="product-card">
+          <div class="product-badge parts">Repuesto</div>
+          <div class="product-image">
+            <img src="imagenes/huawey.jpg" alt="" class="products-img">
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Pantalla de Huawey</h3>
+            <p class="product-description">Vendo o permuto por algo de mi interes</p>
+            <div class="product-user">
+              <div class="img-user">
+                <img src="imagenes/alien.jpg" alt="">
+              </div>
+              <span class="rating-text">Rami77</span>
+            </div>
+            <div class="product-price">
+              <span class="current-price">$80,000</span>
+              <span class="original-price">$100,000</span>
+            </div>
+            <button class="add-to-cart-btn">
+              <i class="fas fa-message"></i>
+              contactar vendedor
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
