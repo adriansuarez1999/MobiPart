@@ -1,4 +1,5 @@
 from django import forms
+from .models import Post
 
 
 class PostFilterForm(forms.Form):
@@ -12,3 +13,11 @@ class PostFilterForm(forms.Form):
             ("create_at", "Más antiguos"),
         ),
     )
+
+
+class PostForm(forms.ModelForm):
+    image = forms.ImageField(required=False)
+
+    class Meta:
+        fields = ["title", "content", "price", "category", "image"]
+        model = Post

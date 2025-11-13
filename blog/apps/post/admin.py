@@ -15,19 +15,11 @@ class PostAdmin(admin.ModelAdmin):
         "category",
         "create_at",
         "update_at",
-        "allow_comments",
     )
     search_fields = ("id", "title", "content", "author__username")
     prepopulated_fields = {"slug": ("title",)}
-    list_filter = ("category", "author", "create_at", "allow_comments")
+    list_filter = ("category", "author", "create_at")
     ordering = ("-create_at",)
-
-
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ("id", "author", "post", "creted_at")
-    search_fields = ("id", "author__username", "post__title")
-    list_filter = ("creted_at", "author")
-    ordering = ("-creted_at",)
 
 
 def activate_images(modeladmin, request, queryset):
@@ -63,6 +55,5 @@ class PostImageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(Comment, CommentAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(PostImage, PostImageAdmin)

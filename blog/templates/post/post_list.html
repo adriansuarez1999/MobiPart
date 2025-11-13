@@ -7,13 +7,46 @@
 
     <h2>Resultado de la busqueda</h2>
     
-    {% for post in posts %}
-        <section class="">
-            <p>{{ post.title }}</p>
-            <p>{{ post.category }}</p>
-            <p>{{ post.author }}</p> 
-            <p>{{ post.content }}</p>
-        </section>
-    {% endfor %}
+    
+    <section class="featured-section">
+        <div class="container">
+            <div class="products-grid">
+                {% for post in posts %}
+                <div class="product-card">
+                    <div class="product-badge new">{{ post.category }}</div>
+                    <div class="product-image">
+                        {% with first_image=post.images.first %}
+                            {% if first_image %}
+                                <img src="{{ first_image.image.url }}" alt="{{ post.title }}" style="width: 100%; height: auto;">
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">{{ post.title }}</h3>
+                        <p class="product-description">{{ post.content }}</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text"><p>{{ post.author }}</p></span>
+                        </div>
+                        <div class="product-price">
+                            <span class="current-price">{{ post.price }}</span>
+                        </div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Enviar Mensaje
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 {% endblock content %}
+
 

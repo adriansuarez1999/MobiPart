@@ -17,8 +17,8 @@
         </div>
 
         <ul class="nav-links">
-            <li><a class="items" href="#"><i class="fas fa-shop"></i>Publicar</a></li>
-            <li><a class="items" href="#"><i class="fas fa-shopping-cart"></i>Mis publicaciones</a></li>
+            <li><a class="items" href="{% url 'post:post_create' %}"><i class="fas fa-shop"></i>Publicar</a></li>
+            <li><a class="items" href="{% url 'post:my_post' %}"><i class="fas fa-shopping-cart"></i>Mis publicaciones</a></li>
             <li><a class="items" href="#"><i class="fas fa-envelope-open"></i>Mensajes</a></li>
             <li><a class="items" href="#"><i class="fas fa-circle-user"></i>Mi Cuenta</a></li>
         </ul>
