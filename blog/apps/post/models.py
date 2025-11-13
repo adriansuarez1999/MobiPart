@@ -16,6 +16,7 @@ class Category(models.Model):
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     slug = models.SlugField(unique=True, max_length=200, blank=True)
     content = models.TextField(max_length=10000)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -24,14 +25,9 @@ class Post(models.Model):
     )
     create_at = models.DateTimeField(default=timezone.now)
     update_at = models.DateTimeField(auto_now=True)
-    allow_comments = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
-
-    @property
-    def amount_comments(self):
-        return self.comments.count()
 
     def generate_unique_slug(self):
         slug = slugify(self.title)
@@ -45,25 +41,13 @@ class Post(models.Model):
         return unique_slug
 
     def save(self, *args, **kwargs):
+        creating = self._state.adding
         if not self.slug:
             self.slug = self.generate_unique_slug()
-
         super().save(*args, **kwargs)
 
-        if not self.images.exists():
+        if creating and not self.images.exists():
             PostImage.objects.create(post=self, image="post/default/post_default.png")
-
-
-class Comment(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
-    content = models.TextField(max_length=400)
-    creted_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.content
 
 
 def get_image_path(instance, filename):
@@ -83,3 +67,9 @@ class PostImage(models.Model):
 
     def __str__(self):
         return f"PostImage {self.id}"
+
+    def save(self, *args, **kwargs):
+        if not self.active:
+            self.active = True
+
+        super().save(*args, **kwargs)

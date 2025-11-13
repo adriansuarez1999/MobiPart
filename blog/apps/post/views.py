@@ -1,8 +1,9 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 from django.db.models import Count, Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.post.models import *
-from apps.post.forms import PostFilterForm
+from apps.post.forms import PostFilterForm, PostForm
+from django.urls import reverse_lazy
 
 
 class PostListView(ListView):
@@ -13,7 +14,7 @@ class PostListView(ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        queryset = Post.objects.all().annotate(comments_count=Count("comments"))
+        queryset = super().get_queryset()
         search_query = self.request.GET.get("search_query", "")
         order_by = self.request.GET.get("order_by", "-create_at")
 
@@ -25,7 +26,6 @@ class PostListView(ListView):
                 | Q(category__name__icontains=search_query)
             )
         return queryset.order_by(order_by)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -64,12 +64,28 @@ class PostListView(ListView):
         return context
 
 
+print("Este es el error: ", PostForm)
+
+
 class PostDetailView(TemplateView):
     template_name = "post/post_detail.html"
 
 
-class PostCreateView(TemplateView):
-    template_name = "post/post_detail.html"
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = "post/post_create.html"
+    success_url = reverse_lazy("post:post_list")
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        response = super().form_valid(form)
+        image_file = self.request.FILES.get("image")
+
+        if image_file:
+            PostImage.objects.create(post=self.object, image=image_file)
+
+        return response
 
 
 class PostUpdateView(TemplateView):
@@ -83,7 +99,7 @@ class PostDeleteView(TemplateView):
 class MyPostView(LoginRequiredMixin, ListView):
     model = Post
     template_name = "post/post_list.html"
-    context_object_name = "post"
+    context_object_name = "posts"
 
     def get_queryset(self):
         return Post.objects.filter(author=self.request.user)
