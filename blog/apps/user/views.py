@@ -39,7 +39,7 @@ class LoginView(LoginViewDjango):
 class LogoutView(View):
     def get(self, request, *args, **kwargs):
         logout(request)
-        next_url = request.META.get("HTTP_REFERER", "/")
+        next_url = request.GET.get("next", "/")
         return redirect(next_url)
 
 
