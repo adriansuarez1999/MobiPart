@@ -20,7 +20,7 @@
             <li><a class="items" href="{% url 'post:post_create' %}"><i class="fas fa-shop"></i>Publicar</a></li>
             <li><a class="items" href="{% url 'post:my_post' %}"><i class="fas fa-shopping-cart"></i>Mis publicaciones</a></li>
             <li><a class="items" href="#"><i class="fas fa-envelope-open"></i>Mensajes</a></li>
-            <li><a class="items" href="#"><i class="fas fa-circle-user"></i>Mi Cuenta</a></li>
+            <li><a class="items" href="{% url 'user:user_profile' %}"><i class="fas fa-circle-user"></i>Mi Cuenta</a></li>
         </ul>
     </nav>
 
@@ -30,7 +30,7 @@
         <!-- SECCIÓN BIENVENIDA -->
         <section class="bienvenido-horizontal">
             <div class="bienvenido">
-                <h3>Bienvenido de nuevo, Fulano</h3>
+                <h3>Bienvenido de nuevo, {{ request.user.username }}</h3>
                 <i class="fas fa-smile"></i>
             </div>
             <p>Tus publicaciones, compras y mensajes en un solo lugar.</p>
@@ -46,43 +46,67 @@
                     <p>Cambia tu foto de perfil y edita tu información personal.</p>
                 </header>
 
-                <div class="cont-perfil">
-                    <img class="img-perfil" src="{% static 'post_images/pinguino2.jpg' %}" alt="Foto de perfil">
-                    <div>
-                        <button>Cambiar foto</button>
-                        <p>JPG o PNG — la imagen se recortará automáticamente</p>
+                <form class="cont-form" method="POST" enctype="multipart/form-data">
+                    <div class="cont-perfil">
+                        <img class="img-perfil" src="{{ request.user.avatar.url }}" alt="Foto de perfil">
+                        <div class="avatar-input-wrapper">
+                            {{ form.avatar }}
+                            <p class="avatar-note">JPG o PNG — la imagen se recortará automáticamente</p>
+                        </div>
                     </div>
-                </div>
+                    {% csrf_token %}
 
-                <form class="cont-form">
-                    <label for="nombre"><h5>Nombre</h5></label>
-                    <input id="nombre" type="text" placeholder="Rambo777">
+                    <label for="id_username"><h5>Nombre</h5></label>
+                    {{ form.username }}
 
-                    <label for="email"><h5>E-mail</h5></label>
-                    <input id="email" type="email" placeholder="Rambo323@gmail.com">
+                    <label for="id_alias"><h5>Alias</h5></label>
+                    {{ form.alias }}
 
-                    <label for="password"><h5>Contraseña</h5></label>
-                    <div style="display:flex; gap:10px; align-items:center;">
-                        <input id="password" type="password" placeholder="••••••••" style="flex:1;">
-                        <button type="button">Editar contraseña</button>
+                    <label for="id_email"><h5>E-mail</h5></label>
+                    {{ form.email }}
+
+                    <label><h5>Contraseña</h5></label>
+                    <div class="password-row">
+                        <input id="password" type="password" value="********" disabled class="input-perfil">
+                        <button type="button" class="btn-password" 
+                                onclick='window.location.href="{% url "user:password_change" %}"'>
+                            Editar contraseña
+                        </button>
                     </div>
 
-                    <label for="localidad"><h5>Localidad</h5></label>
-                    <input id="localidad" type="text" placeholder="Charata">
-
-                    <button type="submit">Actualizar perfil</button>
+                    <button class="btn-submit" type="submit">Actualizar perfil</button>
                 </form>
             </section>
 
             <!-- COLUMNA DERECHA -->
             <aside class="contenedor-derecho">
                 <div class="actividad-reciente">
-                    <h5 style="margin-bottom: 10px; font-size: 16px;">Mis Favoritos</h5>
-                    <p style="color:#555; font-size:14px;">Aquí aparecerán tus publicaciones guardadas.</p>
+                    <h5>Mis Favoritos</h5>
+                    <p>Aquí aparecerán tus publicaciones guardadas.</p>
                 </div>
             </aside>
 
         </div>
     </main>
 </div>
+
+<!-- SCRIPT PARA VISTA PREVIA DE AVATAR -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const avatarInput = document.getElementById("id_avatar");
+    const avatarImg = document.querySelector(".img-perfil");
+
+    if (avatarInput && avatarImg) {
+        avatarInput.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => avatarImg.src = e.target.result;
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+});
+</script>
+
 {% endblock content %}

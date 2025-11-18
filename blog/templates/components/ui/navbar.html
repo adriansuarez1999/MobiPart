@@ -1,10 +1,16 @@
 <nav>
     <div class="nav-actions">
         <div class="user-menu">
-            <button class="login-btn">
-                <i class="fas fa-user"></i>
-                <span>Perfil</span>
-            </button>
+            {% if user.is_authenticated %}
+                <button class="login-btn">
+                    <img src="{{ user.avatar.url }}" alt="Avatar" class="avatar">
+                    <span>{{ user.username }}</span>
+                </button>
+            {% else %}
+                <button class="login-btn">
+                    <span>Iniciar Sesión</span>
+                </button>
+            {% endif %}   
             <div class="dropdown-menu">
                 <div class="dropdown-divider"></div>
                 
