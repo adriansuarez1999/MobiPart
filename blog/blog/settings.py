@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DJANGO_ENV = os.getenv('DJANGO_ENV', 'development')
-
+STATIC_URL = '/static/'
 if DJANGO_ENV == 'production':
     from .configurations.production import *
 else:

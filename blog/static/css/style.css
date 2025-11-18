@@ -6,6 +6,7 @@
 }
 
 body {
+    min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
@@ -136,7 +137,7 @@ body {
     right: 0;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
     min-width: 200px;
     opacity: 0;
     visibility: hidden;
@@ -234,12 +235,36 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
-    padding: 4rem 0;
+    /* Antes tenías algo como background-color: #f107a3; */
+    background: linear-gradient(rgba(247,7,163,0.5), rgba(123,47,247,0.5)), 
+                url('/ruta/de/tu/imagen.jpg');
+    background-size: cover;        
+    background-position: center;   
+    background-repeat: no-repeat;  
+    position: relative;            
+    width: 100%;
+    min-height: 500px;             
     display: flex;
-    align-items: center;
-    min-height: 500px;
+    align-items: center;           
+    justify-content: space-between; 
+    padding: 50px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3); /* blanco semitransparente */
+    z-index: 1;
+    border-radius: inherit; /* si querés bordes redondeados */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2; /* para que quede arriba del overlay */
 }
 
 .hero-content {
@@ -321,7 +346,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    box-shadow: -80px 20px 40px rgba(0,0,0,0.2);
     transform: rotate(-5deg);
     animation: float 3s ease-in-out infinite;
 }
@@ -872,3 +897,53 @@ body {
     background: #ffc107;
     color: #333;
 }
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.pagination-list {
+  display: flex;
+  list-style: none;       /* ❗ Elimina los puntitos */
+  gap: 8px;
+  padding: 0;
+}
+
+.pagination-list li a,
+.pagination-list li span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.pagination-list li a:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.pagination-list li.active span {
+  background-color: #343a40;
+  color: #fff;
+  cursor: default;
+}
+
+.avatar {
+    width: 30px;       
+    height: 30px;      
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;  
+    transition: all 0.3s ease;
+}
+

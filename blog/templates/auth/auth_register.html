@@ -5,7 +5,8 @@
 
 
 {% block content %}
-<section class="">
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+<section class="register">
     <h1 class="">Registrarse</h1>
     <form method="POST" enctype="multipart/form-data" class="">
         {% csrf_token %}

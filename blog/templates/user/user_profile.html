@@ -1,8 +1,112 @@
 {% extends 'layouts/general_layout.html' %}
+{% load static %}
 
-{% block title %} Perfil {% endblock title %}
-
+{% block title %}Perfil{% endblock title %}
 
 {% block content %}
-    Colocar contenido del perfil
+<link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<div class="contenedor-padre">
+    
+    <!-- NAVBAR LATERAL -->
+    <nav class="nav-bar-vertical">
+        <div class="logo">
+            <i class="fas fa-mobile-alt"></i>
+            <h2>MobiPart</h2>
+        </div>
+
+        <ul class="nav-links">
+            <li><a class="items" href="{% url 'post:post_create' %}"><i class="fas fa-shop"></i>Publicar</a></li>
+            <li><a class="items" href="{% url 'post:my_post' %}"><i class="fas fa-shopping-cart"></i>Mis publicaciones</a></li>
+            <li><a class="items" href="#"><i class="fas fa-envelope-open"></i>Mensajes</a></li>
+            <li><a class="items" href="{% url 'user:user_profile' %}"><i class="fas fa-circle-user"></i>Mi Cuenta</a></li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="cuerpo">
+
+        <!-- SECCIÓN BIENVENIDA -->
+        <section class="bienvenido-horizontal">
+            <div class="bienvenido">
+                <h3>Bienvenido de nuevo, {{ request.user.username }}</h3>
+                <i class="fas fa-smile"></i>
+            </div>
+            <p>Tus publicaciones, compras y mensajes en un solo lugar.</p>
+        </section>
+
+        <!-- SECCIÓN PERFIL + DERECHA -->
+        <div class="contenedor-panza">
+
+            <!-- TARJETA PERFIL -->
+            <section class="tarjeta-1">
+                <header class="descripcion">
+                    <h3>Perfil</h3>
+                    <p>Cambia tu foto de perfil y edita tu información personal.</p>
+                </header>
+
+                <form class="cont-form" method="POST" enctype="multipart/form-data">
+                    <div class="cont-perfil">
+                        <img class="img-perfil" src="{{ request.user.avatar.url }}" alt="Foto de perfil">
+                        <div class="avatar-input-wrapper">
+                            {{ form.avatar }}
+                            <p class="avatar-note">JPG o PNG — la imagen se recortará automáticamente</p>
+                        </div>
+                    </div>
+                    {% csrf_token %}
+
+                    <label for="id_username"><h5>Nombre</h5></label>
+                    {{ form.username }}
+
+                    <label for="id_alias"><h5>Alias</h5></label>
+                    {{ form.alias }}
+
+                    <label for="id_email"><h5>E-mail</h5></label>
+                    {{ form.email }}
+
+                    <label><h5>Contraseña</h5></label>
+                    <div class="password-row">
+                        <input id="password" type="password" value="********" disabled class="input-perfil">
+                        <button type="button" class="btn-password" 
+                                onclick='window.location.href="{% url "user:password_change" %}"'>
+                            Editar contraseña
+                        </button>
+                    </div>
+
+                    <button class="btn-submit" type="submit">Actualizar perfil</button>
+                </form>
+            </section>
+
+            <!-- COLUMNA DERECHA -->
+            <aside class="contenedor-derecho">
+                <div class="actividad-reciente">
+                    <h5>Mis Favoritos</h5>
+                    <p>Aquí aparecerán tus publicaciones guardadas.</p>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+</div>
+
+<!-- SCRIPT PARA VISTA PREVIA DE AVATAR -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const avatarInput = document.getElementById("id_avatar");
+    const avatarImg = document.querySelector(".img-perfil");
+
+    if (avatarInput && avatarImg) {
+        avatarInput.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => avatarImg.src = e.target.result;
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+});
+</script>
+
 {% endblock content %}

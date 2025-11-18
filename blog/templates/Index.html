@@ -1,11 +1,13 @@
 {% extends 'layouts/general_layout.html' %}
 
 {% block title %} Inicio {% endblock title %}
+{% load static %}
+
 
 
 {% block content %}
  <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" style="background-image: url('{% static 'images/fondo3.jpg' %}');">
         <div class="hero-content">
             <h1 class="hero-title">Encuentra tu próximo celular</h1>
             <p class="hero-subtitle">Miles de celulares nuevos, usados y repuestos al mejor precio</p>

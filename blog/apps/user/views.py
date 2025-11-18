@@ -1,11 +1,12 @@
-from django.views.generic import TemplateView, CreateView
-from apps.user.forms import RegisterForm, LoginForm
+from django.views.generic import TemplateView, CreateView, UpdateView
+from apps.user.forms import RegisterForm, LoginForm, UserUpdateForm
 from django.urls import reverse_lazy
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView as LoginViewDjango
 from django.shortcuts import redirect
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class UserProfileView(TemplateView):
@@ -40,3 +41,23 @@ class LogoutView(View):
         logout(request)
         next_url = request.META.get("HTTP_REFERER", "/")
         return redirect(next_url)
+
+
+User = get_user_model()
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    template_name = "user/user_profile.html"
+    success_url = reverse_lazy("user:user_profile")
+
+    def get_object(self):
+        return self.request.user
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        if "avatar" in self.request.FILES:
+            self.object.avatar = self.request.FILES["avatar"]
+        self.object.save()
+        return super().form_valid(form)

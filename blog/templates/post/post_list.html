@@ -5,13 +5,107 @@
 
 {% block content %}
 
-    <h2>Resultado de la busqueda</h2>
+    <h2></h2>
     
-    {% for post in posts %}
-        <p>{{ post.title }}</p>
-        <p>{{ post.category }}</p>
-        <p>{{ post.author }}</p> 
-        <p>{{ post.content }}</p> 
-    {% endfor %}
+    
+  <section class="featured-section">
+    <div class="container">
+        <div class="products-grid">
+            {% for post in posts %}
+            <div class="product-card">
+                <div class="product-badge new">{{ post.category }}</div>
+                <div class="product-image">
+                    {% with post.images.all|first as imagen %}
+                        {% if imagen %}
+                            <img src="{{ imagen.image.url }}" alt="{{ post.title }}" style="width: 100%; height: auto;">
+                        {% else %}
+                            <div class="">
+                              Sin imagen
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">{{ post.title }}</h3>
+                    <p class="product-description">{{ post.content }}</p>
+                    <div class="product-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-text"><p>{{ post.author }}</p></span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">{{ post.price }}</span>
+                    </div>
+                    <button class="add-to-cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        Enviar Mensaje
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <p>No hay publicaciones disponibles.</p>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+            <nav class="pagination">
+              <ul class="pagination-list">
+                <!-- Ir a la primera página -->
+                {% if page_obj.number > 1 %}
+                  <li>
+                    <a href="?page=1">
+                      <i class="fas fa-angle-double-left"></i>
+                    </a>
+                  </li>
+                {% endif %}
+
+                <!-- Página anterior -->
+                {% if page_obj.has_previous %}
+                  <li>
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                      <i class="fas fa-angle-left"></i>
+                    </a>
+                  </li>
+                {% endif %}
+
+                <!-- Números de página -->
+                {% for num in page_obj.paginator.page_range %}
+                  {% if num == page_obj.number %}
+                    <li class="active"><span>{{ num }}</span></li>
+                  {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
+                    <li><a href="?page={{ num }}">{{ num }}</a></li>
+                  {% endif %}
+                {% endfor %}
+
+                <!-- Página siguiente -->
+                {% if page_obj.has_next %}
+                  <li>
+                    <a href="?page={{ page_obj.next_page_number }}">
+                      <i class="fas fa-angle-right"></i>
+                    </a>
+                  </li>
+                {% endif %}
+
+                <!-- Ir a la última página -->
+                {% if page_obj.number < page_obj.paginator.num_pages %}
+                  <li>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">
+                      <i class="fas fa-angle-double-right"></i>
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+            {% endif %}
+
+    </div>
+ </section>
+
 {% endblock content %}
+
 

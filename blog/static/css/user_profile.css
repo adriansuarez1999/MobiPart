@@ -1,0 +1,254 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f3f4f6;
+  overflow-x: hidden;
+}
+
+.contenedor-padre {
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.nav-bar-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 260px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #7b2ff7, #f107a3);
+  border-radius: 0 20px 20px 0;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
+  padding: 30px 0;
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 50px;
+}
+
+.logo i {
+  color: #ffd700;
+  font-size: 32px;
+}
+
+.logo h2 {
+  color: white;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.logo h2:hover {
+  color: #ffd700;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.nav-links li {
+  width: 100%;
+}
+
+.nav-links .items {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 40px;
+  color: white;
+  font-size: 17px;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.nav-links .items i {
+  font-size: 20px;
+  color: white;
+}
+
+.nav-links .items:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+  border-radius: 8px;
+}
+
+.cuerpo {
+  flex: 1;
+  padding: 40px 50px;
+}
+
+.bienvenido-horizontal {
+  margin-bottom: 25px;
+}
+
+.bienvenido {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bienvenido h3 {
+  font-size: 30px;
+  color: #333;
+}
+
+.bienvenido i {
+  color: #7b2ff7;
+}
+
+/* ================== CONTENEDOR PRINCIPAL ================== */
+.contenedor-panza {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 25px;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+/* ================== TARJETA PERFIL ================== */
+.tarjeta-1 {
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+/* ================== FOTO DE PERFIL ================== */
+.cont-perfil {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.img-perfil {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ddd;
+}
+
+.avatar-input-wrapper input {
+  width: 100%;
+  padding: 8px;
+}
+
+/* ================== FORMULARIO ================== */
+.cont-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cont-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.password-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-password,
+.cont-form button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: background 0.3s ease;
+}
+
+.btn-password:hover,
+.cont-form button:hover {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* ================== COLUMNA DERECHA ================== */
+.contenedor-derecho {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.actividad-reciente {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ================== RESPONSIVE ================== */
+@media (max-width: 992px) {
+  .contenedor-padre {
+    flex-direction: column;
+  }
+
+  .nav-bar-vertical {
+    flex-direction: row;
+    width: 100%;
+    min-height: auto;
+    border-radius: 0;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    justify-content: space-around;
+  }
+
+  .logo {
+    margin-bottom: 0;
+  }
+
+  .contenedor-panza {
+    grid-template-columns: 1fr;
+  }
+
+  .cont-perfil {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .bienvenido h3 {
+    font-size: 22px;
+  }
+
+  .img-perfil {
+    width: 100px;
+    height: 100px;
+  }
+
+  .cont-form input {
+    font-size: 14px;
+  }
+}
+
