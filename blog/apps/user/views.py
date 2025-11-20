@@ -1,4 +1,5 @@
-from django.views.generic import TemplateView, CreateView, UpdateView
+from django.views.generic import TemplateView, CreateView, UpdateView, DetailView
+from django.shortcuts import get_object_or_404
 from apps.user.forms import RegisterForm, LoginForm, UserUpdateForm
 from django.urls import reverse_lazy
 from django.contrib.auth import logout, get_user_model
@@ -16,7 +17,7 @@ class UserProfileView(TemplateView):
 class RegisterView(CreateView):
     template_name = "auth/auth_register.html"
     form_class = RegisterForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("user:auth_login")
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -39,7 +40,7 @@ class LoginView(LoginViewDjango):
 class LogoutView(View):
     def get(self, request, *args, **kwargs):
         logout(request)
-        next_url = request.META.get("HTTP_REFERER", "/")
+        next_url = request.GET.get("next", "home")
         return redirect(next_url)
 
 
@@ -61,3 +62,19 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
             self.object.avatar = self.request.FILES["avatar"]
         self.object.save()
         return super().form_valid(form)
+
+
+class ProfileView(DetailView):
+    model = User
+    template_name = "user/profile.html"
+    context_object_name = "profile_user"
+    slug_field = "username"  # permite /perfil/pepito
+    slug_url_kwarg = "username"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(User, username=self.kwargs.get("username"))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_own_profile"] = self.request.user == self.object
+        return context

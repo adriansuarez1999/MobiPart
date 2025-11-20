@@ -12,10 +12,21 @@ def get_avatar_filename(instance, filename):
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    alias = models.CharField(max_length=50, blank=True)
+    username = models.CharField(
+        max_length=15,
+        unique=True,
+        error_messages={"unique": "Ya existe un usuario con ese nombre."},
+    )
+    alias = models.CharField(max_length=20, blank=True)
     avatar = models.ImageField(
         upload_to=get_avatar_filename, default="user/default/default.jpg"
     )
+    bio = models.TextField(max_length=500, blank=True)
+    name = models.CharField(max_length=30, blank=True, null=False)
+    last_name = models.CharField(max_length=30, blank=True, null=False)
+    age = models.PositiveIntegerField(null=True, blank=True)
+    DNI = models.CharField(max_length=20, blank=True, null=False)
+    phone = models.CharField(max_length=20, blank=True, default="")
 
     def __str__(self):
         return self.username

@@ -1,107 +1,81 @@
+# apps/user/admin.py
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
-from apps.user.models import User
+from .models import User
+from django.utils.html import format_html
 
 
+@admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    fieldsets = UserAdmin.fieldsets + ((None, {"fields": ("alias", "avatar")}),)
-
-    add_fieldsets = (
-        (None, {"fields": ("username", "email", "avatar", "password1", "password2")}),
-    )
-
-    def is_registered(self, obj):
-        return obj.groups.filter(name="Registered").exists()
-
-    is_registered.short_description = "Es usuario registrado"
-    is_registered.boolean = True
-
-    def is_collaborator(self, obj):
-        return obj.groups.filter(name="Collaborators").exists()
-
-    is_collaborator.short_description = "Es usuario colaborador"
-    is_collaborator.boolean = True
-
-    def is_admin(self, obj):
-        return obj.groups.filter(name="admins").exists()
-
-    is_admin.short_description = "Es usuario administrador"
-    is_admin.boolean = True
-
-
-    def add_to_registered(self, request, queryset):
-        registered_group = Group.objects.get(name="Registered")
-        for user in queryset:
-            user.groups.add(registered_group)
-
-    add_to_registered.short_description = (
-        'Agregar usuario seleccionado al grupo "Registrado"'
-    )
-
-    def add_to_collaborators(self, request, queryset):
-        collaborators_group = Group.objects.get(name="Collaborators")
-        for user in queryset:
-            user.groups.add(collaborators_group)
-
-    add_to_collaborators.short_description = (
-        'Agregar usuario seleccionado al grupo "Colaborador"'
-    )
-
-    def add_to_admins(self, request, queryset):
-        admins_group = Group.objects.get(name="admins")
-        for user in queryset:
-            user.groups.add(admins_group)
-
-    add_to_admins.short_description = (
-        'Agregar usuario seleccionado al grupo "Administrador"'
-    )
-
-    def remove_from_registered(self, request, queryset):
-        registered_group = Group.objects.get(name="Registered")
-        for user in queryset:
-            user.groups.remove(registered_group)
-
-    remove_from_registered.short_description = (
-        'Eliminar usuario seleccionado del grupo "Registrado"'
-    )
-
-    def remove_from_collaborators(self, request, queryset):
-        collaborators_group = Group.objects.get(name="Collaborators")
-        for user in queryset:
-            user.groups.remove(collaborators_group)
-
-    remove_from_collaborators.short_description = (
-        'Eliminar usuario seleccionado del grupo "Colaborador"'
-    )
-
-    def remove_from_admins(self, request, queryset):
-        admins_group = Group.objects.get(name="admins")
-        for user in queryset:
-            user.groups.remove(admins_group)
-
-    remove_from_admins.short_description = (
-        'Eliminar usuario seleccionado del grupo "Administrador"'
-    )
-
     list_display = (
         "username",
         "email",
+        "name",
+        "last_name",
         "is_staff",
         "is_superuser",
-        "is_registered",
-        "is_collaborator",
-        "is_admin",
+        "date_joined",
+    )
+    list_filter = ("is_staff", "is_superuser", "is_active", "groups", "date_joined")
+    search_fields = ("username", "email", "name", "last_name", "phone")
+    readonly_fields = ("date_joined", "last_login")
+
+    fieldsets = (
+        ("Credenciales", {"fields": ("username", "password")}),
+        (
+            "Información personal",
+            {
+                "fields": (
+                    "name",
+                    "last_name",
+                    "email",
+                    "alias",
+                    "avatar",
+                    "bio",
+                    "age",
+                    "DNI",
+                    "phone",
+                )
+            },
+        ),
+        (
+            "Permisos",
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                )
+            },
+        ),
+        ("Fechas", {"fields": ("last_login", "date_joined"), "classes": ("collapse",)}),
     )
 
-    actions = [
-        add_to_registered,
-        add_to_collaborators,
-        add_to_admins,
-        remove_from_registered,
-        remove_from_collaborators,
-        remove_from_admins,
-    ]
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "username",
+                    "email",
+                    "password1",
+                    "password2",
+                    "is_staff",
+                    "is_active",
+                ),
+            },
+        ),
+    )
 
+    def avatar_preview(self, obj):
+        if obj.avatar and hasattr(obj.avatar, "url"):
+            return format_html(
+                '<img src="{}" width="80" style="border-radius:50%;">', obj.avatar.url
+            )
+        return "Sin avatar"
 
-admin.site.register(User, CustomUserAdmin)
+    avatar_preview.short_description = "Avatar"

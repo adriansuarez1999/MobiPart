@@ -15,10 +15,23 @@ class Category(models.Model):
 
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(max_length=200)
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    brand = models.CharField(
+        max_length=50,
+        null=False,
+    )
+    model = models.CharField(max_length=50, null=True, blank=True)
+    Storage = models.CharField(max_length=50, null=True, blank=True)
+    RAM = models.CharField(max_length=50, null=True, blank=True)
+    screen_size = models.CharField(max_length=50, null=True, blank=True)
+    camera_specs = models.CharField(max_length=100, null=True, blank=True)
+    battery_capacity = models.CharField(max_length=50, null=True, blank=True)
+    color = models.CharField(max_length=50, null=True, blank=True)
+    price = models.DecimalField(
+        max_digits=10, decimal_places=2, max_length=10, null=True, blank=True
+    )
+    phone = models.CharField(blank=True, null=False, default="")
     slug = models.SlugField(unique=True, max_length=200, blank=True)
-    content = models.TextField(max_length=10000)
+    content = models.TextField(max_length=200)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, related_name="post"
@@ -27,10 +40,10 @@ class Post(models.Model):
     update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return self.brand
 
     def generate_unique_slug(self):
-        slug = slugify(self.title)
+        slug = slugify(self.brand)
         unique_slug = slug
         num = 1
 
@@ -44,8 +57,10 @@ class Post(models.Model):
         creating = self._state.adding
         if not self.slug:
             self.slug = self.generate_unique_slug()
+
         super().save(*args, **kwargs)
 
+        # SOLO creamos imagen por defecto si es nuevo Y no tiene imágenes
         if creating and not self.images.exists():
             PostImage.objects.create(post=self, image="post/default/post_default.png")
 
