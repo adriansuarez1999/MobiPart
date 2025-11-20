@@ -1,8 +1,9 @@
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView, CreateView, DetailView
 from django.db.models import Count, Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.post.models import *
 from apps.post.forms import PostFilterForm, PostForm
+from urllib.parse import quote
 from django.urls import reverse_lazy
 
 
@@ -20,7 +21,7 @@ class PostListView(ListView):
 
         if search_query:
             queryset = queryset.filter(
-                Q(title__icontains=search_query)
+                Q(brand__icontains=search_query)
                 | Q(author__username__icontains=search_query)
                 | Q(content__icontains=search_query)
                 | Q(category__name__icontains=search_query)
@@ -64,25 +65,45 @@ class PostListView(ListView):
         return context
 
 
-class PostDetailView(TemplateView):
-    template_name = "post/post_detail.html"
-
-
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = "post/post_create.html"
-    success_url = reverse_lazy("post:post_list")
+    success_url = reverse_lazy("post:post_list")  # mejor que "/"
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
-        response = super().form_valid(form)
-        image_file = self.request.FILES.get("image")
+        post = form.save(commit=False)
+        post.author = self.request.user
+        post.save()
 
-        if image_file:
-            PostImage.objects.create(post=self.object, image=image_file)
+        # GUARDAR IMÁGENES SUBIDAS
+        images = self.request.FILES.getlist("images")
+        if images:
+            for img in images:
+                PostImage.objects.create(post=post, image=img)
+        # Si no subió ninguna → NO creamos imagen por defecto aquí
+        # (lo hacemos en el save() del modelo solo si NO existe ninguna)
 
-        return response
+        return super().form_valid(form)
+
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = "post/post_detail.html"
+    context_object_name = "post"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        precio = self.object.price
+        if precio is not None:
+            precio_formateado = f"${precio:,.0f}".replace(",", ".")
+        else:
+            precio_formateado = "Consultar"
+
+        mensaje = f"Hola! Vi tu publicación del {self.object.brand} {self.object.model or ''} por {precio_formateado}. ¿Aún sigue disponible? Me interesa!"
+        context["mensaje_whatsapp"] = quote(mensaje)
+
+        return context
 
 
 class PostUpdateView(TemplateView):
@@ -100,9 +121,9 @@ class MyPostView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Post.objects.filter(author=self.request.user)
-    
+
     paginate_by = 3
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["filter_form"] = PostFilterForm(self.request.GET)

@@ -393,26 +393,35 @@ body {
     color: #764ba2;
 }
 
+/* ===================== TARJETAS DE PRODUCTOS – VERSIÓN PERFECTA Y COMPACTA ===================== */
+
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    gap: 1.2rem;
+    align-items: start;
 }
 
+/* TARJETA */
 .product-card {
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 5px 20px;
+    display: flex;
+    flex-direction: column;
     background: white;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
+    transition: 0.3s;
+    height: auto;
     position: relative;
 }
 
+/* Hover */
 .product-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
+/* BADGE */
 .product-badge {
     position: absolute;
     top: 1rem;
@@ -424,111 +433,117 @@ body {
     z-index: 1;
 }
 
-.product-badge.new {
+.product-badge.Nuevo {
     background: #28a745;
     color: white;
 }
 
-.product-badge.used {
+.product-badge.Usado {
     background: #ffc107;
     color: #333;
 }
 
-.product-badge.parts {
+.product-badge.Repuesto {
     background: #17a2b8;
     color: white;
 }
 
-.product-badge.repair {
+.product-badge.Reparacion {
     background: #dc3545;
     color: white;
 }
 
+
+/* Imagen más compacta */
 .product-image {
-    height: 200px;
-    background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+    width: 100%;
+    height: 220px; /* ← Antes 260px */
+    overflow: hidden;
+    border-radius: 14px 14px 0 0;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 4rem;
-    color: #6c757d;
+    align-items: center;
+    background: #f5f5f5;
 }
 
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/* INFO */
 .product-info {
-    padding: 1.5rem;
+    padding: 12px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
 }
 
+/* Título más chico */
 .product-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: #333;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0;
 }
 
+/* Descripción compacta */
 .product-description {
+    font-size: 0.85rem;
     color: #666;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
+/* Rating alineado */
 .product-rating {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: 0.4rem;
 }
 
-.stars {
-    display: flex;
-    gap: 0.1rem;
+.product-rating img {
+    width: 26px;
+    height: 26px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
-.stars i {
-    color: #ffc107;
-    font-size: 0.9rem;
-}
-
-.rating-text {
-    font-size: 0.9rem;
-    color: #666;
-}
-
+/* Precio más compacto */
 .product-price {
-    margin-bottom: 1.5rem;
+    margin-top: 0.2rem;
 }
 
 .current-price {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: #28a745;
 }
 
-.original-price {
-    font-size: 1rem;
-    color: #999;
-    text-decoration: line-through;
-    margin-left: 0.5rem;
-}
-
+/* Botón al fondo */
 .add-to-cart-btn {
+    margin-top: auto;
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.65rem;
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     gap: 0.5rem;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.add-to-cart-btn:hover {
-    background: linear-gradient(45deg, #764ba2, #667eea);
-    transform: translateY(-2px);
-}
 
 /* Services Section */
 .services-section {
@@ -945,4 +960,204 @@ body {
     object-fit: cover;
     border: 2px solid #ddd;  
     transition: all 0.3s ease;
+}
+
+/* ============================================================= */
+/* ===================== HOME – MEJORAS 2025 =================== */
+/* ============================================================= */
+
+/* HERO SECTION – Más impactante */
+.hero {
+    background: linear-gradient(rgba(102,126,234,0.88), rgba(118,75,162,0.92)),
+                url('../images/fondo3.jpg') center/cover no-repeat !important;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,215,0,0.12), transparent 60%);
+    z-index: 1;
+}
+
+/* Contenedor interno del hero (para grid) */
+.hero > div:first-child {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.hero-content,
+.hero-image {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 4.8rem !important;
+    font-weight: 900 !important;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+    background: linear-gradient(135deg, #ffffff, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem !important;
+    font-weight: 500;
+    opacity: 0.95;
+    margin-bottom: 2.5rem;
+    color: #f0f0f0;
+}
+
+/* Títulos de cada sección (más nuevos, nuevos, usados, etc.) */
+.featured-section .section h1,
+.featured-section .section h2 {
+    font-size: 2.6rem !important;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    padding-bottom: 0.8rem;
+}
+
+.featured-section .section h1::after,
+.featured-section .section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 5px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 3px;
+}
+
+/* Estado vacío – cuando no hay productos */
+.products-grid:empty::before,
+.products-grid p:empty,
+.products-grid .empty-message,
+.products-grid p:only-child {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #888;
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+.products-grid p:only-child i,
+.products-grid .empty-message i {
+    display: block;
+    font-size: 4.5rem;
+    color: #ddd;
+    margin-bottom: 1rem;
+}
+
+/* Responsive del hero */
+@media (max-width: 992px) {
+    .hero > div:first-child {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 3rem;
+    }
+    .hero-title {
+        font-size: 3.8rem !important;
+    }
+    .hero-actions {
+        justify-content: center;
+    }
+    .hero-image {
+        order: -1;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        min-height: 80vh;
+    }
+    .hero-title {
+        font-size: 2.9rem !important;
+    }
+    .hero-subtitle {
+        font-size: 1.25rem !important;
+    }
+    .featured-section .section h1,
+    .featured-section .section h2 {
+        font-size: 2.2rem !important;
+    }
+}
+
+/* Pequeño toque extra: animación suave al mockup del celular */
+.phone-mockup {
+    animation: float 6s ease-in-out infinite;
+}
+
+.category-title {
+    grid-column: 1 / -1;  /* ocupa toda la fila */
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0.8rem 0;
+}
+
+.product-rating .user-link {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    padding: 0.4rem;
+    border-radius: 12px;
+}
+
+.product-rating .user-link:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
+
+.product-rating .user-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.product-rating .user-name {
+    font-weight: 600;
+    color: #444;
+    font-size: 0.95rem;
+}
+
+.product-rating .user-name:hover {
+    color: var(--color-primary-1);
 }

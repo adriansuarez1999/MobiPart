@@ -1,5 +1,6 @@
 from django.urls import path
 from apps.user.views import *
+from apps.user.views import ProfileView
 from django.contrib.auth import views as auth_views
 
 app_name = "user"
@@ -18,4 +19,5 @@ urlpatterns = [
         ),
         name="password_change",
     ),
+    path("perfil/<str:username>/", ProfileView.as_view(), name="profile"),
 ]

@@ -1,3 +1,195 @@
-.register{
-  background-color: aqua;
+:root {
+    --color-primary-1: #667eea;
+    --color-primary-2: #764ba2;
+    --color-accent-1: #ff6b6b;
+}
+
+.register-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8f5ff 0%, #ede7ff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.register-card {
+    background: white;
+    max-width: 480px;
+    width: 100%;
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(102, 126, 234, 0.25);
+    overflow: hidden;
+}
+
+.register-header {
+    text-align: center;
+    padding: 2.5rem 2rem 1.5rem;
+    background: linear-gradient(135deg, var(--color-primary-1), var(--color-primary-2));
+    color: white;
+}
+
+.register-header i {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.register-header h1 {
+    font-size: 2.2rem;
+    margin: 0 0 0.5rem;
+    font-weight: 800;
+}
+
+.register-header p {
+    opacity: 0.9;
+    font-size: 1.05rem;
+}
+
+.register-form {
+    padding: 2.5rem 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 700;
+    color: #444;
+    font-size: 1.02rem;
+}
+
+.required { color: var(--color-accent-1); }
+
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"],
+.register-form input[type="file"] {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2.5px solid #e2e8f0;
+    border-radius: 14px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fdfdff;
+}
+
+.register-form input:focus {
+    outline: none;
+    border-color: var(--color-primary-1);
+    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.18);
+    background: white;
+}
+
+/* Avatar */
+.avatar-group {
+    text-align: center;
+}
+
+.avatar-upload {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.avatar-label {
+    display: block;
+    cursor: pointer;
+}
+
+.avatar-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: all 0.3s;
+}
+
+.avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(102, 126, 234, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.avatar-overlay i {
+    color: white;
+    font-size: 2rem;
+}
+
+.avatar-upload:hover .avatar-overlay {
+    opacity: 1;
+}
+
+.avatar-upload:hover .avatar-img {
+    transform: scale(1.05);
+}
+
+#avatarInput {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+/* Botón */
+.btn-register {
+    width: 100%;
+    background: linear-gradient(135deg, var(--color-primary-1), var(--color-primary-2));
+    color: white;
+    padding: 1.1rem;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1rem;
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.35);
+    transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(102, 126, 234, 0.45);
+}
+
+/* Enlace login */
+.login-link {
+    text-align: center;
+    margin-top: 2rem;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.login-link a {
+    color: var(--color-primary-1);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: var(--color-accent-1);
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+    display: block;
+}
+
+@media (max-width: 480px) {
+    .register-card { margin: 1rem; }
+    .register-header { padding: 2rem 1.5rem; }
+    .register-header h1 { font-size: 1.9rem; }
 }

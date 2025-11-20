@@ -1,0 +1,78 @@
+{% extends 'layouts/general_layout.html' %}
+{% load static %}
+
+{% block title %}{{ profile_user.get_full_name|default:profile_user.username }} (@{{ profile_user.username }}){% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+l
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<div class="profile-container">
+    <div class="profile-card">
+        <!-- Header violeta -->
+        <div class="profile-header">
+            <img src="{{ profile_user.avatar.url }}" alt="{{ profile_user.username }}" class="avatar-large">
+        </div>
+
+        <div class="profile-body">
+            <h1 class="profile-name">
+                {{ profile_user.name|default:"Sin nombre" }} {{ profile_user.last_name|default:"Sin nombre" }}
+            </h1>
+            <p class="profile-username">@{{ profile_user.username }}</p>
+
+            {% if profile_user.alias %}
+                <p style="color: var(--color-primary-1); font-weight: 600;">
+                    "{{ profile_user.alias }}"
+                </p>
+            {% endif %}
+
+            {% if profile_user.bio %}
+                <p class="profile-bio">{{ profile_user.bio }}</p>
+            {% else %}
+                <p class="profile-bio" style="color:#aaa; font-style:italic;">
+                    Este usuario aún no ha escrito nada sobre sí mismo.
+                </p>
+            {% endif %}
+
+            <!-- Stats (podés llenar después con publicaciones, ventas, etc.) -->
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Publicaciones</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">48</div>
+                    <div class="stat-label">Ventas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">Valoración</div>
+                </div>
+            </div>
+
+            <!-- Información pública -->
+            <div class="info-grid">
+                {% if profile_user.age %}
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-birthday-cake"></i> Edad</div>
+                    <div class="info-value">{{ profile_user.age }} años</div>
+                </div>
+                {% endif %}
+
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-calendar-alt"></i> Se unió</div>
+                    <div class="info-value">{{ profile_user.date_joined|date:"F Y" }}</div>
+                </div>
+            </div>
+
+            <div class="joined-date">
+                Miembro desde {{ profile_user.date_joined|date:"d/m/Y" }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,6 +2,8 @@
 
 {% block title %} Post {% endblock title %}
 
+{% load static %}
+
 
 {% block content %}
 
@@ -12,41 +14,7 @@
     <div class="container">
         <div class="products-grid">
             {% for post in posts %}
-            <div class="product-card">
-                <div class="product-badge new">{{ post.category }}</div>
-                <div class="product-image">
-                    {% with post.images.all|first as imagen %}
-                        {% if imagen %}
-                            <img src="C:\Users\lauta\OneDrive\Desktop\MobiPart\blog\media\post\cover\post_f3aab7c9-972b-4760-9855-778d685d316f_image_2.jpeg" alt="{{ post.title }}" style="width: 100%; height: auto;">
-                        {% else %}
-                            <div class="">
-                              Sin imagen
-                            </div>
-                        {% endif %}
-                    {% endwith %}
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">{{ post.title }}</h3>
-                    <p class="product-description">{{ post.content }}</p>
-                    <div class="product-rating">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <span class="rating-text"><p>{{ post.author }}</p></span>
-                    </div>
-                    <div class="product-price">
-                        <span class="current-price">{{ post.price }}</span>
-                    </div>
-                    <button class="add-to-cart-btn">
-                        <i class="fas fa-shopping-cart"></i>
-                        Enviar Mensaje
-                    </button>
-                </div>
-            </div>
+                {% include 'components/card/product_card.html' %}
             {% empty %}
             <p>No hay publicaciones disponibles.</p>
             {% endfor %}
@@ -107,5 +75,3 @@
  </section>
 
 {% endblock content %}
-
-

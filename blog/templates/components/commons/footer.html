@@ -4,49 +4,106 @@
                 <div class="footer-section">
                     <div class="footer-logo">
                         <i class="fas fa-mobile-alt"></i>
-                        <span>CelularMarket</span>
+                        <span>MobiPart</span>
                     </div>
-                    <p>Tu marketplace de confianza para celulares, repuestos y más.</p>
+                    <p>Tu página de confianza para celulares, repuestos y más.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Categorías</h4>
                     <ul>
-                        <li><a href="#">Celulares Nuevos</a></li>
-                        <li><a href="#">Celulares Usados</a></li>
-                        <li><a href="#">Repuestos</a></li>
-                        <li><a href="#">Accesorios</a></li>
+                        <li><a href="#" data-category="nuevos">Celulares Nuevos</a></li>
+                        <li><a href="#" data-category="Usado">Celulares Usados</a></li>
+                        <li><a href="#" data-category="Reparacion">celulares para reparar</a></li>
+                        <li><a href="#" data-category="Repuesto">Repuestos</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Ayuda</h4>
                     <ul>
-                        <li><a href="#">Centro de Ayuda</a></li>
-                        <li><a href="#">Como Comprar</a></li>
-                        <li><a href="#">Como Vender</a></li>
-                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="{% url 'helpCenter' %}">Centro de Ayuda</a></li>
+                        <li><a href="{% url 'howToBuy' %}">Como Comprar</a></li>
+                        <li><a href="{% url 'howToSell' %}">Como Vender</a></li>
+                        <li><a href="{% url 'termsAndConditions' %}">Términos y Condiciones</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Contacto</h4>
                     <ul>
-                        <li><i class="fas fa-phone"></i> +54 11 1234-5678</li>
-                        <li><i class="fas fa-envelope"></i> info@celularmarket.com</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Buenos Aires, Argentina</li>
+                        <li><i class="fas fa-phone"></i> +54 3644-816164</li>
+                        <li><i class="fas fa-envelope"></i> info@mobipart.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Chaco, Argentina</li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 CelularMarket. Todos los derechos reservados.</p>
+                <p>&copy; 2025 MobiPart. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const baseUrl = "{% url 'post:post_list' %}";
+
+    // mapeo data-category -> nombre tal como está en la BD
+    const categoryMap = {
+        'all': '',               // "Todos" -> borra search_query
+        'nuevos': 'Nuevo',
+        'usados': 'Usado',
+        'repuestos': 'Repuesto',
+        'reparacion': 'Reparacion'
+    };
+
+    document.querySelectorAll('a[data-category]').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const key = this.dataset.category;
+        const targetName = categoryMap[key] ?? key;
+
+        // construir nuevos params manteniendo otros (p. ej. order_by)
+        const params = new URLSearchParams(window.location.search);
+
+        if (targetName) {
+            params.set('search_query', targetName);
+        } else {
+            params.delete('search_query'); // "Todos"
+        }
+
+        // resetear paginación al cambiar filtro
+        params.delete('page');
+
+        window.location.href = baseUrl + "?" + params.toString();
+
+        });
+    });
+
+    // marcar active según el search_query actual (para que el botón se vea activo)
+    (function markActive() {
+        const current = new URLSearchParams(window.location.search).get('search_query') || '';
+        document.querySelectorAll('.category-btn').forEach(btn => {
+        const key = btn.dataset.category;
+        const name = categoryMap[key] ?? key;
+        if (!name && !current) {
+            btn.classList.add('active');
+        } else if (name && current.toLowerCase() === name.toLowerCase()) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+        });
+    })();
+
+    });
+</script>

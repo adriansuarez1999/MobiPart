@@ -1,25 +1,59 @@
 {% extends 'layouts/auth_layout.html' %}
 {% load static %}
 
-{% block title %} Iniciar sesión {% endblock title %}
-
-{% block extra_head %}
-{% endblock extra_head %}
+{% block title %}Iniciar sesión{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 {% block content %}
+
+
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
-<section class="login-page">
-    <div class="login-container">
-        <div class="login-card">
-            <h1 class="login-title">Iniciar sesión</h1>
 
-            <form method="POST" class="login-form">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="login-btn">Ingresar</button>
-            </form>
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fas fa-sign-in-alt" style="font-size: 3.5rem; color: var(--color-primary-1); margin-bottom: 1rem;"></i>
+            <h1 class="login-title">¡Bienvenido de nuevo!</h1>
+            <p class="login-subtitle">Iniciá sesión para seguir comprando y vendiendo</p>
         </div>
-    </div>
-</section>
-{% endblock content %}
 
+        <form method="POST" class="login-form">
+            {% csrf_token %}
+
+            <!-- Usuario -->
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Usuario <span class="required">*</span></label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <small class="error">{{ form.username.errors|join:" " }}</small>
+                {% endif %}
+            </div>
+
+            <!-- Contraseña -->
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Contraseña <span class="required">*</span></label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <small class="error">{{ form.password.errors|join:" " }}</small>
+                {% endif %}
+            </div>
+
+            <!-- Errores generales de login -->
+            {% if form.non_field_errors %}
+                <div class="form-group">
+                    <small class="error">{{ form.non_field_errors|join:" " }}</small>
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn-login">
+                <i class="fas fa-arrow-right"></i> Iniciar sesión
+            </button>
+
+            <p class="login-footer">
+                ¿No tenés cuenta? <a href="{% url 'user:auth_register' %}">Registrate acá</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

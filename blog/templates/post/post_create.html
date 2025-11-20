@@ -1,11 +1,162 @@
 {% extends 'layouts/post_layout.html' %}
+{% load static %}
+
+{% block title %}Publicar Celular en Venta{% endblock %}
 
 {% block content %}
-  <h2>Crear nueva publicación</h2>
 
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Publicar</button>
-  </form>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/post_create.css' %}">
+
+<div class="create-container">
+    <div class="create-card">
+        <h1 class="create-title">
+            Publicá tu celular en venta
+        </h1>
+
+        <form method="post" enctype="multipart/form-data" id="postForm">
+            {% csrf_token %}
+
+            <!-- Categoría y Precio -->
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Estado del celular <span class="required">*</span></label>
+                    {{ form.category }}
+                    {% if form.category.errors %}<small class="error">{{ form.category.errors|striptags }}</small>{% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label>Precio (en pesos) <span class="required">*</span></label>
+                    {{ form.price }}
+                    {% if form.price.errors %}<small class="error">{{ form.price.errors|striptags }}</small>{% endif %}
+                </div>
+            </div>
+
+            <!-- Marca y Modelo -->
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Marca <span class="required">*</span></label>
+                    {{ form.brand }}
+                </div>
+                <div class="form-group">
+                    <label>Modelo <span class="required">*</span></label>
+                    {{ form.model }}
+                </div>
+            </div>
+
+            <!-- Especificaciones técnicas -->
+            <div class="specs-grid">
+                <div class="form-group">
+                    <label>Almacenamiento</label>
+                    {{ form.Storage }}
+                </div>
+                <div class="form-group">
+                    <label>RAM</label>
+                    {{ form.RAM }}
+                </div>
+                <div class="form-group">
+                    <label>Pantalla</label>
+                    {{ form.screen_size }}
+                </div>
+                <div class="form-group">
+                    <label>Cámaras</label>
+                    {{ form.camera_specs }}
+                </div>
+                <div class="form-group">
+                    <label>Batería</label>
+                    {{ form.battery_capacity }}
+                </div>
+                <div class="form-group">
+                    <label>Color</label>
+                    {{ form.color }}
+                </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="form-group">
+                <label>Descripción detallada <span class="required">*</span></label>
+                {{ form.content }}
+                {% if form.content.errors %}<small class="error">{{ form.content.errors|striptags }}</small>{% endif %}
+            </div>
+
+            
+            <div class="form-group">
+                <label>Teléfono de contacto <span class="required">*</span></label>
+                {{ form.phone }}
+                <small style="color: #666; font-size: 0.9rem;">
+                    Este número aparecerá en tu publicación para que te contacten
+                </small>
+                {% if form.phone.errors %}<small class="error">{{ form.phone.errors|striptags }}</small>{% endif %}
+            </div>
+
+            <!-- SUBIDA DE FOTOS – LA QUE NUNCA FALLA -->
+                        <!-- SUBIDA DE FOTOS – LA QUE FUNCIONA 100% CON TU CSS ACTUAL -->
+            <div class="form-group">
+                <label>Foto del celular <span class="required">*</span></label>
+
+                <div class="upload-area">
+                    <!-- Input oculto -->
+                    <input type="file"
+                           name="images"
+                           id="imageInput"
+                           multiple
+                           accept="image/*"
+                           required>
+
+                    <!-- ESTE LABEL ES LA CLAVE: usa tu clase .upload-placeholder y cubre todo -->
+                    <label for="imageInput" class="upload-placeholder">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p><strong>Haz clic o arrastrá tus fotos aquí</strong></p>
+                        <small>Fotos · JPG, PNG, WEBP</small>
+                    </label>
+                </div>
+
+                <div id="previewContainer" class="preview-grid"></div>
+            </div>
+
+            <!-- Botones -->
+            <div class="actions">
+                <button type="submit" class="btn-publish">
+                    Publicar Anuncio
+                </button>
+                <a href="{% url 'post:post_list' %}" class="btn-cancel">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const previewContainer = document.getElementById('previewContainer');
+
+    imageInput.addEventListener('change', function () {
+        const files = Array.from(this.files);
+
+        if (files.length > 8) {
+            alert('¡Máximo 8 fotos permitidas!');
+            this.value = '';
+            previewContainer.innerHTML = '';
+            return;
+        }
+
+        previewContainer.innerHTML = '';
+
+        files.forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const div = document.createElement('div');
+                    div.className = 'preview-item';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" alt="Vista previa">
+                        <button type="button" class="remove-img" onclick="this.parentElement.remove()">×</button>
+                    `;
+                    previewContainer.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>
+
 {% endblock %}
