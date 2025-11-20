@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Centro de ayuda - CelularMarket</title>
+
+    <style>
+        :root{
+        --bg: #f5f7fa;
+        --card: #ffffff;
+        --muted: #6b7280;
+        --accent: #667eea;
+        --accent-2: #764ba2;
+        --shadow: 0 10px 30px rgba(22,24,28,0.06);
+        --radius: 12px;
+        font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        html,body{height:100%;}
+        body{
+        margin:0;
+        background: linear-gradient(180deg, var(--bg), #f8fafc);
+        color:#111827;
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:24px;
+        }
+
+        .card{
+        width:100%;
+        max-width:820px;
+        background:var(--card);
+        border-radius:var(--radius);
+        box-shadow:var(--shadow);
+        padding:32px;
+        display:flex;
+        gap:20px;
+        align-items:flex-start;
+        box-sizing:border-box;
+        }
+
+        .emoji {
+        flex: 0 0 84px;
+        width:84px;
+        height:84px;
+        border-radius:50%;
+        background:linear-gradient(135deg,var(--accent),var(--accent-2));
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        font-size:36px;
+        box-shadow: 0 6px 18px rgba(102,126,234,0.18);
+        }
+
+        .content{
+        flex:1;
+        min-width:0;
+        }
+
+        h1{
+        margin:0 0 8px 0;
+        font-size:1.45rem;
+        line-height:1.15;
+        }
+
+        p{
+        margin:0 0 16px 0;
+        color:var(--muted);
+        font-size:1rem;
+        line-height:1.45;
+        }
+
+        .actions{
+        display:flex;
+        gap:12px;
+        margin-top:8px;
+        flex-wrap:wrap;
+        }
+
+        .btn {
+        display:inline-flex;
+        align-items:center;
+        gap:10px;
+        padding:10px 16px;
+        border-radius:10px;
+        text-decoration:none;
+        font-weight:600;
+        border: none;
+        cursor:pointer;
+        }
+
+        .btn-primary{
+        background: linear-gradient(90deg,var(--accent),var(--accent-2));
+        color:white;
+        box-shadow: 0 8px 18px rgba(102,126,234,0.15);
+        }
+
+        .btn-secondary{
+        background: transparent;
+        color: var(--accent-2);
+        border: 1px solid rgba(116,86,184,0.12);
+        }
+
+        .note{
+        margin-top:14px;
+        color:#9aa3b2;
+        font-size:0.9rem;
+        }
+
+        @media (max-width:640px){
+        .card{flex-direction:column; padding:20px;}
+        .emoji{margin:0 auto 2px auto;}
+        h1{text-align:center;}
+        }
+    </style>
+    </head>
+    <body>
+    <main class="card" role="main" aria-labelledby="t">
+        <div class="emoji" aria-hidden="true">😕</div>
+        <div class="content">
+        <h1 id="t">Lo sentimos</h1>
+        <p>
+            Todavía no contamos con un centro de ayuda. Podés comunicarte con uno de los administradores
+            y contarle tus inquietudes; te responderán a la brevedad.
+        </p>
+
+        <div class="actions" role="group" aria-label="Acciones">
+            <!-- Usá el mail que tengas en tu footer -->
+            <a class="btn btn-primary"
+            href="mailto:info@celularmarket.com?subject=Consulta%20soporte%20CelularMarket"
+            title="Enviar email a administradores">
+            ✉️ Contactar administradores
+            </a>
+
+            <!-- Link al inicio (ajustá la URL si tu home está en otra ruta) -->
+            <a class="btn btn-secondary" href="/" title="Volver al inicio">🏠 Volver al inicio</a>
+        </div>
+
+        <p class="note">
+            Si preferís, también podés dejar tu consulta en el formulario de contacto o en el chat cuando esté disponible.
+        </p>
+        </div>
+    </main>
+    </body>
+    </html>
+

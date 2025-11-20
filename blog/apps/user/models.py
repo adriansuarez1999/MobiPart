@@ -21,6 +21,12 @@ class User(AbstractUser):
     avatar = models.ImageField(
         upload_to=get_avatar_filename, default="user/default/default.jpg"
     )
+    bio = models.TextField(max_length=500, blank=True)
+    name = models.CharField(max_length=30, blank=True, null=False)
+    last_name = models.CharField(max_length=30, blank=True, null=False)
+    age = models.PositiveIntegerField(null=True, blank=True)
+    DNI = models.CharField(max_length=20, blank=True, null=False)
+    phone = models.CharField(max_length=20, blank=True, default="")
 
     def __str__(self):
         return self.username

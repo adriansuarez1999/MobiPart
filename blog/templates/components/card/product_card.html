@@ -1,0 +1,39 @@
+{% load static %}
+    
+<div class="product-card">
+    <div class="product-badge {{ post.category }}">{{ post.category }}</div>
+        <div class="product-image">
+            {% if post.images.last %}
+                <img src="{{ post.images.last.image.url }}" alt="{{ post.brand }}">
+            {% else %}
+                <img src="{% static 'post/default/post_default.png' %}" alt="Sin imagen">
+            {% endif %}
+
+        </div>
+
+    <div class="product-info">
+        <h3 class="product-title">{{ post.brand }} {{ post.model }}</h3>
+        <p class="product-description">{{ post.content }}</p>
+        <div class="product-rating">
+            <a href="{% url 'user:profile' post.author.username %}" class="user-link">
+                <img src="{{ post.author.avatar.url }}" alt="{{ post.author.username }}" class="user-avatar">
+                <span class="user-name">
+                    {% if post.author.get_full_name.strip %}
+                        {{ post.author.get_full_name }}
+                    {% elif post.author.alias %}
+                        {{ post.author.alias }}
+                    {% else %}
+                        @{{ post.author.username }}
+                    {% endif %}
+                </span>
+            </a>
+        </div>
+        <div class="product-price">
+            <span class="current-price">{{ post.price }}</span>
+        </div>
+        <a href="{% url 'post:post_detail' post.slug %} " class="add-to-cart-btn">
+            <i class="fas fa-shopping-cart"></i>
+            Ver detalles
+        </a>
+    </div>
+</div>

@@ -1,59 +1,87 @@
+# apps/post/admin.py
 from django.contrib import admin
-from apps.post.models import *
+from django.utils.html import format_html
+from .models import Category, Post, PostImage
 
 
+@admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name",)
     search_fields = ("name",)
+    ordering = ("name",)
 
 
+class PostImageInline(admin.TabularInline):
+    model = PostImage
+    extra = 1
+    readonly_fields = ("image_preview",)
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" width="100" height="100" style="object-fit: cover; border-radius:8px;" />',
+                obj.image.url,
+            )
+        return "Sin imagen"
+
+    image_preview.short_description = "Vista previa"
+
+
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
-        "title",
+        "brand",
+        "model",
         "author",
+        "price",
         "category",
         "create_at",
-        "update_at",
+        "phone_link",
     )
-    search_fields = ("id", "title", "content", "author__username")
-    prepopulated_fields = {"slug": ("title",)}
-    list_filter = ("category", "author", "create_at")
+    list_filter = ("category", "create_at", "author")
+    search_fields = ("brand", "model", "content", "author__username", "author__email")
+    readonly_fields = ("create_at", "update_at", "slug")
+    prepopulated_fields = {"slug": ("brand", "model")}
+    inlines = [PostImageInline]
+    date_hierarchy = "create_at"
     ordering = ("-create_at",)
 
-
-def activate_images(modeladmin, request, queryset):
-    updated = queryset.update(active=True)
-    modeladmin.message_user(
-        request, f"{updated} imagenes fueron activadas correctamente."
+    fieldsets = (
+        (
+            "Información principal",
+            {"fields": ("brand", "model", "category", "price", "phone", "content")},
+        ),
+        (
+            "Especificaciones",
+            {
+                "fields": (
+                    "Storage",
+                    "RAM",
+                    "screen_size",
+                    "camera_specs",
+                    "battery_capacity",
+                    "color",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            "Autor y fechas",
+            {
+                "fields": ("author", "create_at", "update_at", "slug"),
+                "classes": ("collapse",),
+            },
+        ),
     )
 
+    def phone_link(self, obj):
+        if obj.phone:
+            phone_clean = obj.phone.replace(" ", "").replace("-", "")
+            return format_html(
+                '<a href="https://wa.me/54{}" target="_blank">{} <i class="fab fa-whatsapp" style="color:green;"></i></a>',
+                phone_clean,
+                obj.phone,
+            )
+        return "Sin teléfono"
 
-activate_images.short_description = "Activar imagenes seleccionadas"
-
-
-def deactivate_images(modeladmin, request, queryset):
-    updated = queryset.update(active=False)
-    modeladmin.message_user(
-        request, f"{updated} imagenes fueron desactivadas correctamente."
-    )
-
-
-deactivate_images.short_description = "Desactivar imagenes seleccionadas"
-
-
-class PostImageAdmin(admin.ModelAdmin):
-    list_display = ("post", "image", "active", "creted_at")
-    search_fields = (
-        "post__id",
-        "post__title",
-        "image",
-    )
-    list_filter = ("active",)
-
-    actions = [activate_images, deactivate_images]
-
-
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Post, PostAdmin)
-admin.site.register(PostImage, PostImageAdmin)
+    phone_link.short_description = "Contacto"
